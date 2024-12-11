@@ -1,6 +1,6 @@
 package com.example.coffeapp.models
 
-data class CoffesDataItem(
+data class CoffeesDataItem(
     val description: String,
     val id: Int,
     val image: String,

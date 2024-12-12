@@ -10,9 +10,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import coil3.network.HttpException
 import com.example.coffeapp.models.CoffeesDataItem
 import com.example.coffeapp.utils.RetrofitInstance
@@ -47,8 +49,8 @@ fun MainScreen() {
                 return@launch
             }
 
-            if(response.isSuccessful && response.body() != null){
-                withContext(Dispatchers.Main){
+            if (response.isSuccessful && response.body() != null) {
+                withContext(Dispatchers.Main) {
                     coffees = response.body()!!
                     Log.i("Coffees Request", coffees.toString())
                 }
@@ -64,8 +66,34 @@ fun MainScreen() {
             HomeScreen(coffees = coffees, navController = navController)
         }
 
-        composable(route = "DetailScreen") {
-            DetailScreen()
+        composable(
+            route = "DetailScreen?title={title}&id={id}&image={image}&description={description}&ingredients={ingredients}",
+            arguments = listOf(
+                navArgument(name = "title") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "id") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "description") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "image") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "ingredients") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            DetailScreen(
+                navController = navController,
+                title = it.arguments?.getString("title"),
+                id = it.arguments?.getString("id"),
+                image = it.arguments?.getString("image"),
+                description = it.arguments?.getString("description"),
+                ingredients = it.arguments?.getString("ingredients"),
+            )
         }
 
     }

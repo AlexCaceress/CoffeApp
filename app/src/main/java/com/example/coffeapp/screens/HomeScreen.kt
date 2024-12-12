@@ -70,7 +70,6 @@ fun HomeScreen(
 
 @Composable
 fun CoffeeItem(
-    modifier: Modifier = Modifier,
     coffee: CoffeesDataItem,
     navController: NavHostController
 ) {
@@ -79,7 +78,9 @@ fun CoffeeItem(
             .fillMaxWidth()
             .height(300.dp),
         onClick = {
-            //TODO
+
+            navController.navigate("DetailScreen?title=${coffee.title}&id=${coffee.id}&image=${coffee.image}&description=${coffee.description}&ingredients=${coffee.ingredients.joinToString(", ")}")
+
         },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {

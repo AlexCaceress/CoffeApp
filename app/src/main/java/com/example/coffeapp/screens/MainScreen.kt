@@ -17,7 +17,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil3.network.HttpException
 import com.example.coffeapp.models.CoffeesDataItem
+import com.example.coffeapp.repository.Repository
+import com.example.coffeapp.room.CoffeeDB
 import com.example.coffeapp.utils.RetrofitInstance
+import com.example.coffeapp.viewmodel.CoffeeViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,6 +36,13 @@ fun MainScreen() {
     }
 
     val context = LocalContext.current
+
+    // DB
+
+    val db = CoffeeDB.getInstance(context)
+    val repository = Repository(db)
+    val coffeeViewModel = CoffeeViewModel(repository)
+
 
     LaunchedEffect(key1 = true) {
 
@@ -67,7 +77,7 @@ fun MainScreen() {
         }
 
         composable(
-            route = "DetailScreen?title={title}&id={id}&image={image}&description={description}&ingredients={ingredients}",
+            route = "DetailScreen?title={title}&id={id}&image={image}&description={description}",
             arguments = listOf(
                 navArgument(name = "title") {
                     type = NavType.StringType
@@ -81,9 +91,9 @@ fun MainScreen() {
                 navArgument(name = "image") {
                     type = NavType.StringType
                 },
-                navArgument(name = "ingredients") {
-                    type = NavType.StringType
-                }
+//                navArgument(name = "ingredients") {
+//                    type = NavType.StringType
+//                }
             )
         ) {
             DetailScreen(
@@ -92,7 +102,7 @@ fun MainScreen() {
                 id = it.arguments?.getString("id"),
                 image = it.arguments?.getString("image"),
                 description = it.arguments?.getString("description"),
-                ingredients = it.arguments?.getString("ingredients"),
+//                ingredients = it.arguments?.getString("ingredients"),
             )
         }
 

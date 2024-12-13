@@ -16,5 +16,9 @@ class Repository(private val coffeeDB: CoffeeDB) {
         coffeeDB.coffeeDAO().updateCoffee(coffeeEntity)
     }
 
+    suspend fun insertCoffeesFromRoom(listCoffeeEntity : List<CoffeeEntity>){
+        coffeeDB.coffeeDAO().insertAllCoffee(listCoffeeEntity)
+    }
+
     fun getAllCoffees() = coffeeDB.coffeeDAO().getAllCoffees()
 }

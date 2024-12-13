@@ -1,11 +1,13 @@
 package com.example.coffeapp.room
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface CoffeeDAO {
 
     @Insert
@@ -19,5 +21,8 @@ interface CoffeeDAO {
 
     @Update
     suspend fun updateCoffee(coffeeEntity: CoffeeEntity)
+
+    @Insert
+    suspend fun insertAllCoffee(listCoffeeEntity: List<CoffeeEntity>)
 
 }

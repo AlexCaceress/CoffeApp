@@ -5,11 +5,16 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CoffeeEntity(
-    @PrimaryKey(autoGenerate = false)
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
 
     val description: String,
     val image: String,
-    val ingredients: List<String>,
+
+    //Els ingredients fallen
+
+//    val ingredients: List<String>,
     val title: String,
 )
+
+

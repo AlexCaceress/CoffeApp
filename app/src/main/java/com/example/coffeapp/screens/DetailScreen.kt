@@ -36,7 +36,6 @@ import coil3.compose.AsyncImage
 @Composable
 fun DetailScreen(
     navController: NavController,
-    ingredients: String?,
     title: String?,
     id: String?,
     image: String?,
@@ -97,22 +96,25 @@ fun DetailScreen(
                     textAlign = TextAlign.Justify
                 )
             }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Text(
-                    text = "Ingredients: ",
-                    fontSize = 20.sp, fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = ingredients ?: "",
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Justify
 
-                )
-            }
+            //TODO
+
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxWidth(),
+//                verticalArrangement = Arrangement.spacedBy(10.dp)
+//            ) {
+//                Text(
+//                    text = "Ingredients: ",
+//                    fontSize = 20.sp, fontWeight = FontWeight.Bold
+//                )
+//                Text(
+//                    text = ingredients ?: "",
+//                    fontSize = 14.sp,
+//                    textAlign = TextAlign.Justify
+//
+//                )
+//            }
         }
 
     }

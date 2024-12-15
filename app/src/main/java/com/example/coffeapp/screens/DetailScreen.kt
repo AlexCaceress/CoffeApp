@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.coffeapp.room.CoffeeEntity
 import com.example.coffeapp.viewmodel.CoffeeViewModel
 
 @Composable
@@ -177,6 +178,16 @@ fun DetailScreen(
 
                     Button(
                         onClick = {
+                            val newCoffee = CoffeeEntity(
+                                id = id!!.toInt(),
+                                description = inputDescription,
+                                title = inputTitle,
+                                image = image!!,
+                            )
+
+                            viewModel.updateCoffee(newCoffee)
+                            navController.popBackStack()
+                            closeDialog()
 
                         }
                     ) {

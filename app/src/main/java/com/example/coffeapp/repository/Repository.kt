@@ -1,5 +1,6 @@
 package com.example.coffeapp.repository
 
+import com.example.coffeapp.models.CoffeesDataItem
 import com.example.coffeapp.room.CoffeeDB
 import com.example.coffeapp.room.CoffeeEntity
 
@@ -18,6 +19,23 @@ class Repository(private val coffeeDB: CoffeeDB) {
 
     suspend fun insertCoffeesFromRoom(listCoffeeEntity : List<CoffeeEntity>){
         coffeeDB.coffeeDAO().insertAllCoffee(listCoffeeEntity)
+    }
+
+    suspend fun isDatabaseEmpty() : Boolean{
+        return coffeeDB.coffeeDAO().getCount() == 0
+    }
+
+    fun mapDataItemToCoffeeEntity(dataItems : ArrayList<CoffeesDataItem>) : List<CoffeeEntity> {
+
+        return dataItems.map { dataItem ->
+            CoffeeEntity(
+                description = dataItem.description,
+                image = dataItem.image,
+                title = dataItem.title,
+                id = dataItem.id
+            )
+        }
+
     }
 
     fun getAllCoffees() = coffeeDB.coffeeDAO().getAllCoffees()

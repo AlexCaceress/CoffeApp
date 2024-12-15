@@ -26,6 +26,12 @@ class CoffeeViewModel(val repository: Repository) : ViewModel() {
         }
     }
 
+    fun insertAllCoffees(coffees: List<CoffeeEntity>){
+        viewModelScope.launch {
+            repository.insertCoffeesFromRoom(coffees)
+        }
+    }
+
     val coffees = repository.getAllCoffees()
 
 }

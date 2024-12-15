@@ -25,4 +25,7 @@ interface CoffeeDAO {
     @Insert
     suspend fun insertAllCoffee(listCoffeeEntity: List<CoffeeEntity>)
 
+    @Query("SELECT COUNT(*) FROM CoffeeEntity")
+    suspend fun getCount() : Int
+
 }

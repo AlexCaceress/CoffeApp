@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -135,12 +136,39 @@ fun DetailScreen(
                 }
             },
             title = {
-                Text(
-                    text = "Update coffee",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 25.sp,
-                    modifier = Modifier.padding(5.dp)
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Update coffee",
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                    IconButton(
+                        onClick = {
+
+                            viewModel.deleteCoffee(
+                                CoffeeEntity(
+                                    id = id!!.toInt(),
+                                    image = image!!,
+                                    description = description!!,
+                                    title = title!!
+                                )
+                            )
+
+                            navController.popBackStack()
+                            closeDialog()
+
+                        },
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete Coffee"
+                        )
+                    }
+                }
             },
             text = {
 
@@ -188,7 +216,6 @@ fun DetailScreen(
                             viewModel.updateCoffee(newCoffee)
                             navController.popBackStack()
                             closeDialog()
-
                         }
                     ) {
                         Text(text = "Save")

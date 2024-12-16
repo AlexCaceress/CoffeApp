@@ -10,10 +10,7 @@ data class CoffeeEntity(
 
     val description: String,
     val image: String,
-
-    //Els ingredients fallen
-
-//    val ingredients: List<String>,
+    val ingredients: String,
     val title: String,
 )
 

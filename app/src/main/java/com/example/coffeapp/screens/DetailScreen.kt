@@ -1,6 +1,5 @@
 package com.example.coffeapp.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,12 +50,14 @@ fun DetailScreen(
     id: String?,
     image: String?,
     description: String?,
-    viewModel: CoffeeViewModel
+    viewModel: CoffeeViewModel,
+    ingredients: String?
 ) {
 
     var showDialog by remember { mutableStateOf(false) }
     var inputTitle by remember { mutableStateOf(title ?: "") }
     var inputDescription by remember { mutableStateOf(description ?: "") }
+    var inputIngredients by remember { mutableStateOf(ingredients ?: "") }
 
     fun onBackClick() {
         navController.popBackStack()
@@ -119,6 +120,15 @@ fun DetailScreen(
                     fontSize = 14.sp,
                     textAlign = TextAlign.Justify
                 )
+                Text(
+                    text = "Ingredients: ",
+                    fontSize = 20.sp, fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = ingredients ?: "Have not been specified",
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Justify
+                )
             }
 
         }
@@ -153,7 +163,8 @@ fun DetailScreen(
                                     id = id!!.toInt(),
                                     image = image!!,
                                     description = description!!,
-                                    title = title!!
+                                    title = title!!,
+                                    ingredients = ingredients!!
                                 )
                             )
 
@@ -198,11 +209,21 @@ fun DetailScreen(
                             Text(text = "Enter your coffee description")
                         }
                     )
+                    OutlinedTextField(
+                        value = inputIngredients,
+                        onValueChange = {inputIngredients = it},
+                        label = {
+                            Text(text = "Coffee ingredients")
+                        },
+                        placeholder = {
+                            Text(text = "Enter your ingredients")
+                        }
+                    )
                 }
             },
             confirmButton = {
 
-                if(inputTitle.isNotEmpty() &&  inputDescription.isNotEmpty()){
+                if(inputTitle.isNotEmpty() && inputDescription.isNotEmpty()){
 
                     Button(
                         onClick = {
@@ -211,6 +232,7 @@ fun DetailScreen(
                                 description = inputDescription,
                                 title = inputTitle,
                                 image = image!!,
+                                ingredients = inputIngredients
                             )
 
                             viewModel.updateCoffee(newCoffee)

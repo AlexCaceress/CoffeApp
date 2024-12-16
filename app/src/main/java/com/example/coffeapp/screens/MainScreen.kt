@@ -1,5 +1,6 @@
 package com.example.coffeapp.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,6 +38,8 @@ fun MainScreen() {
 
             val isDatabaseEmpty = repository.isDatabaseEmpty()
 
+            Log.e("Database empty", isDatabaseEmpty.toString())
+
             if (isDatabaseEmpty) {
 
                 val response = try {
@@ -70,7 +73,7 @@ fun MainScreen() {
         }
 
         composable(
-            route = "DetailScreen?title={title}&id={id}&image={image}&description={description}",
+            route = "DetailScreen?title={title}&id={id}&image={image}&description={description}&ingredients={ingredients}",
             arguments = listOf(
                 navArgument(name = "title") {
                     type = NavType.StringType
@@ -84,6 +87,9 @@ fun MainScreen() {
                 navArgument(name = "image") {
                     type = NavType.StringType
                 },
+                navArgument(name = "ingredients") {
+                    type = NavType.StringType
+                }
             )
         ) {
             DetailScreen(
@@ -92,6 +98,7 @@ fun MainScreen() {
                 id = it.arguments?.getString("id"),
                 image = it.arguments?.getString("image"),
                 description = it.arguments?.getString("description"),
+                ingredients = it.arguments?.getString("ingredients"),
                 viewModel = coffeeViewModel
             )
         }

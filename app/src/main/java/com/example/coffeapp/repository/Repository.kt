@@ -32,7 +32,8 @@ class Repository(private val coffeeDB: CoffeeDB) {
                 description = dataItem.description,
                 image = dataItem.image,
                 title = dataItem.title,
-                id = dataItem.id
+                id = dataItem.id,
+                ingredients = dataItem.ingredients.joinToString(", ")
             )
         }
 

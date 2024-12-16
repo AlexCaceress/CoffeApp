@@ -58,6 +58,7 @@ fun HomeScreen(
     var showDialog by remember { mutableStateOf(false) }
     var inputTitle by remember { mutableStateOf("") }
     var inputDescription by remember { mutableStateOf("") }
+    var inputIngredients by remember { mutableStateOf("") }
 
     fun openDialog(){
         showDialog = true;
@@ -181,6 +182,16 @@ fun HomeScreen(
                             Text(text = "Enter your coffee description")
                         }
                     )
+                    OutlinedTextField(
+                        value = inputIngredients,
+                        onValueChange = {inputIngredients = it},
+                        label = {
+                            Text(text = "Coffee ingredients")
+                        },
+                        placeholder = {
+                            Text(text = "Enter your ingredients")
+                        }
+                    )
                 }
             },
             confirmButton = {
@@ -193,6 +204,7 @@ fun HomeScreen(
                                 description = inputDescription,
                                 title = inputTitle,
                                 image = "https://cdn-icons-png.flaticon.com/512/924/924514.png", //Default coffee image
+                                ingredients = inputIngredients
                             )
 
                             viewModel.addCoffee(newCoffee)
@@ -225,7 +237,7 @@ fun CoffeeItem(
         onClick = {
 
             navController.navigate(
-                "DetailScreen?title=${coffee.title}&id=${coffee.id}&image=${coffee.image}&description=${coffee.description}"
+                "DetailScreen?title=${coffee.title}&id=${coffee.id}&image=${coffee.image}&description=${coffee.description}&ingredients=${coffee.ingredients}"
             )
 
         },

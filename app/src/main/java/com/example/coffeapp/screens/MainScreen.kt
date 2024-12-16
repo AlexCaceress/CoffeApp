@@ -34,37 +34,42 @@ fun MainScreen() {
 
     LaunchedEffect(key1 = true) {
 
-        scope.launch(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
+            try {
+                val isDatabaseEmpty = repository.isDatabaseEmpty()
 
-            val isDatabaseEmpty = repository.isDatabaseEmpty()
+                Log.e("Database empty", isDatabaseEmpty.toString())
 
-            Log.e("Database empty", isDatabaseEmpty.toString())
+                if (isDatabaseEmpty) {
+                    val response = try {
+                        RetrofitInstance.api.getCoffes()
+                    } catch (e: HttpException) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                context,
+                                "HTTP error ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        return@withContext
+                    }
 
-            if (isDatabaseEmpty) {
-
-                val response = try {
-                    RetrofitInstance.api.getCoffes()
-                } catch (e: HttpException) {
-                    Toast.makeText(
-                        context,
-                        "http error ${e.toString()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@launch
-                }
-
-                if (response.isSuccessful && response.body() != null) {
-                    withContext(Dispatchers.Main) {
+                    if (response.isSuccessful && response.body() != null) {
                         val coffeesEntity = repository.mapDataItemToCoffeeEntity(response.body()!!)
-                        coffeeViewModel.insertAllCoffees(coffeesEntity)
+                        withContext(Dispatchers.Main) {
+                            coffeeViewModel.insertAllCoffees(coffeesEntity)
+                        }
                     }
                 }
-
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.e("Database error", e.toString())
+                    Toast.makeText(context, "Unexpected error occurred", Toast.LENGTH_SHORT).show()
+                }
             }
-
         }
-
     }
+
 
     NavHost(navController = navController, startDestination = "HomeScreen") {
 
